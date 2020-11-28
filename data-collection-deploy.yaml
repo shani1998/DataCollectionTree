@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  data-collection-tree
+  labels:
+    name:  data-collection-tree
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name:  data-collection-tree
+    spec:
+      containers:
+      - image:  skp123/data_collection_tree:0.1
+        name:  data-collection-tree
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        ports:
+        - containerPort:  8080
+          name:  tree-api
+      restartPolicy: Always
+
